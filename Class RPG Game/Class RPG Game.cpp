@@ -20,17 +20,17 @@ protected: // Protected members are accessible within the class and by derived c
 
 public: // public members are accessable to all
 	Character() = default;
-	Character(std::string mainName, int mainHealth, int mainDamage, int mainArmor, bool manIsAlive)
+	Character(std::string mainName, int mainHealth, int mainDamage, int mainArmor, bool mainIsAlive)
 	{
 		name = mainName;
 		health = mainHealth;
 		damage = mainDamage;
 		armor = mainArmor;
-		isAlive = manIsAlive;
+		isAlive = mainIsAlive;
 	}
 
 	void displayStatus() {
-		std::cout << "Name: " << name << "\nHealth: " << health << "\nAttack: " << damage << std::endl;
+		std::cout << "Name: " << name << "\nHealth: " << health << "\nAttack: " << damage << "\nArmor" << armor << "\nIsAlive" << isAlive << std::endl;
 	}
 
 	//HEAL
@@ -81,8 +81,9 @@ class Archer : public Character
 
 int main()
 {
-
-	//createPlayerCharacter();
+	//creating player
+	//How do I save this function to be equal to the playerCharacter = CreatePlayerCharacter??
+	createPlayerCharacter();
 
 	//creating enemy
 	Character enemy("Enemy", 200, 100, 50, 1);
