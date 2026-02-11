@@ -3,5 +3,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Class RPG Game/Class RPG Game.vcxproj" />
+  <Project Path="Class RPG Game/Class RPG Game.vcxproj" Id="81d40d57-9370-4076-836e-d3b7fafd6ce3" />
+  <Project Path="LearningWithAI(CauseThisIsHard)/LearningWithAI(CauseThisIsHard).vcxproj" Id="1274a521-39b3-4539-9ffb-a212f3a5c890" />
 </Solution>
