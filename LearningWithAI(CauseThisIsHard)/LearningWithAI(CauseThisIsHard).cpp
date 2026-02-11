@@ -7,6 +7,8 @@
 #include <ctime>
 #include <conio.h>  // Windows-only for _kbhit() and _getch()
 
+//this is spart... heirarchy!!
+//since the base character class contains all the stats and functions
 class Character
 {
 private: // dont touch my privates NOOB DEV
@@ -37,7 +39,7 @@ public:// everyone can have some
 
 	}
 
-	void attack(Character &target) // Character &target, passes another character by reference so we can modify their stats directly.
+	void attack(Character& target) // Character &target, passes another character by reference so we can modify their stats directly.
 	{
 		int actualDamage = damage - target.armor; //function looks like warrior.attack(mage) this is passing a copy of the damage value from warrior into this funciton
 		if (actualDamage < 0) // prevents healing the enemy
@@ -57,9 +59,11 @@ public:// everyone can have some
 	{
 		int actualDamage = damageAmount - armor; // this int will check if real damage has accured
 		if (actualDamage < 0)
+		{
+			actualDamage = 0;
 			health -= actualDamage;
-
-		if (health <= 0) health = 0; // this clamps the health to 0
+		}
+		if (health < 0) health = 0; // this clamps the health to 0
 	}
 
 	void healHealth(int healAmount)
@@ -98,29 +102,38 @@ int main()
 	int choice;
 	char action;
 	int floor = 0;
+	std::string className;
 
+	//nullptr means “This pointer doesn’t point to anything.”
+	//nullptr is a safe way to initialize pointers before they are assigned a real object.
+	//without it 1/2 = At this point, player could point anywhere in memory.
+	//without it 2/2 = Using it without assigning an object can crash your program.
 	Character* player = nullptr; //Character* allows us to store any subclass in one variable. This is polymorphism
 	choice;
 
 	std::cout << "Choose your class:\n";
 	std::cout << "1. Warrior\n2. Mage\n3. Archer\n";
-	std::cin >> choice;
 
-	//if else chain
-	if (choice == 1)
-		player = new Warrior();
-	else if (choice == 2)
-		player = new Mage();
-	else if (choice == 3)
-		player = new Archer();
-	else {
-		std::cout << "Invalid choice. Defaulting to Warrior.\n";
-		player = new Warrior();
+	while (true)//waits for input(will run forever)
+	{
+		if (_kbhit()) // a key was pressed
+		{
+			choice = _getch(); // read it immediately
+			//using the choice to set the player as a class and saving a class name that will be used later
+			if (choice == '1') { player = new Warrior(); className = "Warrior"; break; }
+			else if (choice == '2') { player = new Mage(); className = "Mage"; break; }
+			else if (choice == '3') { player = new Archer(); className = "Archer"; break; }
+			// ignore other keys
+		}
 	}
+	//DISPLAY CLASS
 	std::cout << "\nClass chosen!\n";
+	std::cout << "You have chosen the " << className << " class!\n";
 
+
+	//GAME LOGIC
 	std::cout << "Press 'w' to walk, 'q' to quit:\n";
-	while (true)
+	while (true) // waits for the player to press a valid key
 	{
 		//since we handle input we do not need to tell the user invalid key entered // unless you want
 		//actions will happen immeditaily after key pressed feeling more responcive
@@ -136,12 +149,14 @@ int main()
 			else if (action == 'q')
 			{
 				std::cout << "Exiting game.\n";
-				break;
+				break;//exits loop
 			}
 		}
 	}
-
-
-	delete player; // frees the memory
+	//If we don’t delete it, that memory stays allocated even after main() ends — this is called a memory leak.
+	//delete also calls the destructor for the object
+	//Every time you use new, you should eventually use delete.
+	delete player; // frees the memory//memory management
+	player = nullptr; // avoid dangling pointer // points to nothing
 	return 0;
 }
