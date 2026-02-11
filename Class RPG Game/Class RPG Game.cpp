@@ -66,16 +66,19 @@ public: // public members are accessable to all
 // CHILD CLASS
 class Warrior : public Character
 {
+	Warrior() : Character("Warrior", 200, 30, 100, 1) {}
 };
 
 // CHILD CLASS
 class Mage : public Character
 {
+	Mage() : Character("Mage", 120, 70, 50, 1) {}
 };
 
 // CHILD CLASS
 class Archer : public Character
 {
+	Archer() : Character("Archer", 150, 50, 70, 1) {}
 };
 
 
